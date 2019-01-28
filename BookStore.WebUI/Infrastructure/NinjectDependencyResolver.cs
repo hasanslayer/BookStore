@@ -11,14 +11,25 @@ namespace BookStore.WebUI.Infrastructure
     {
         private IKernel kernel;
 
+        public NinjectDependencyResolver(IKernel kernelParam)
+        {
+            kernel = kernelParam;
+            AddBindings(); // using of dependency
+        }
+
         public object GetService(Type serviceType)
         {
-            throw new NotImplementedException();
+            return kernel.TryGet(serviceType);
         }
 
         public IEnumerable<object> GetServices(Type serviceType)
         {
-            throw new NotImplementedException();
+            return kernel.GetAll(serviceType);
+        }
+
+        private void AddBindings()
+        {
+            // we add binding here
         }
     }
 }
