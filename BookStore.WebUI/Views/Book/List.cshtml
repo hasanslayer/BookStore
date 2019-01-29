@@ -1,8 +1,16 @@
-﻿@model IEnumerable<BookStore.Domain.Entities.Book>
+﻿@using BookStore.Domain.Entities
+@model IEnumerable<Book>
 
 @{
     ViewBag.Title = "List";
 }
 
-<h2>List</h2>
+<h2>Book List</h2>
+
+@foreach (var book in Model)
+{
+    <h3>@book.Title</h3>
+    <h2>@book.Description</h2>
+    <h2>@book.Price.ToString("C")</h2>
+}
 
