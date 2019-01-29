@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace BookStore.Domain.Entities
 {
-    class Book
+    public class Book
     {
-        public int  ISBN { get; set; }
+        public int ISBN { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
