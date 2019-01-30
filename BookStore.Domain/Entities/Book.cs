@@ -13,7 +13,6 @@ namespace BookStore.Domain.Entities
         public string Description { get; set; }
         public decimal Price { get; set; }
         public string Specialization { get; set; }
-        public string Author { get; set; }
 
     }
 }
