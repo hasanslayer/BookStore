@@ -9,13 +9,7 @@
 
 @foreach (var book in Model.Books)
 {
-    <div>
-        <h3><strong> @book.Title</strong> <span class="pull-right label label-primary">@book.Price.ToString("C")</span></h3>
-
-        <span class="lead">@book.Description</span>
-
-
-    </div>
+    @Html.Partial("BookSummary",book)
 
 }
 
