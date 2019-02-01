@@ -33,10 +33,10 @@ namespace BookStore.UnitTests
             controller.PageSize = 3;
 
             //Act
-            IEnumerable<Book> resultBooks = (IEnumerable<Book>)controller.List(1).Model;
+            BookListViewModel resultBooks = (BookListViewModel)controller.List(1).Model;
 
             //Assert
-            Book[] bookArray = resultBooks.ToArray();
+            Book[] bookArray = resultBooks.Books.ToArray();
             Assert.IsTrue(bookArray.Length == 3);
             Assert.AreEqual(bookArray[0].Title, "Book1");
             Assert.AreEqual(bookArray[1].Title, "Book2");
@@ -64,6 +64,35 @@ namespace BookStore.UnitTests
 
             //Assert
             Assert.AreEqual(expectedResult, result);
+        }
+
+        [TestMethod]
+        public void Can_Send_Pagination_View_Model()
+        {
+            //Arrange
+            Mock<IBookRepository> mock = new Mock<IBookRepository>();
+            mock.Setup(b => b.Books).Returns(
+                new Book[]
+            {
+                new Book() { ISBN = 1,Title = "Operation System"},
+                new Book() { ISBN = 2,Title = "Web Application using ASP.NET"},
+                new Book() { ISBN = 3,Title = "Android Mobile Applications"},
+                new Book() { ISBN = 4,Title = "Database Systems"},
+                new Book() { ISBN = 5,Title = "MIS"}
+            });
+            BookController controller = new BookController(mock.Object);
+            controller.PageSize = 3;
+
+            //Act
+            BookListViewModel result = (BookListViewModel)controller.List(2).Model;
+
+            //Assert
+            PagingInfo pagingInfo = result.PagingInfo;
+            Assert.AreEqual(pagingInfo.CurrentPage, 2);
+            Assert.AreEqual(pagingInfo.ItemsPerPage, 3);
+            Assert.AreEqual(pagingInfo.TotalItems, 5);
+            Assert.AreEqual(pagingInfo.TotalPages, 2);
+
         }
     }
 }
