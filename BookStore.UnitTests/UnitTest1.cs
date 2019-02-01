@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Mvc;
 using BookStore.Domain.Abstract;
 using BookStore.Domain.Entities;
 using BookStore.WebUI.Controllers;
+using BookStore.WebUI.Html_Helper;
+using BookStore.WebUI.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
@@ -38,6 +41,29 @@ namespace BookStore.UnitTests
             Assert.AreEqual(bookArray[0].Title, "Book1");
             Assert.AreEqual(bookArray[1].Title, "Book2");
             Assert.AreEqual(bookArray[2].Title, "Book3");
+        }
+
+        [TestMethod]
+        public void Can_Generate_Page_Links()
+        {
+            //Arrange
+            HtmlHelper myHelper = null;
+            PagingInfo pagingInfo = new PagingInfo()
+            {
+                CurrentPage = 2,
+                TotalItems = 14,
+                ItemsPerPage = 5
+            };
+            Func<int, string> pageUrlDelegate = i => "Page" + i;
+            String expectedResult = "<a class=\"btn btn-default\" href=\"Page1\">1</a>"
+                                   + "<a class=\"btn btn-default btn-primary selected\" href=\"Page2\">2</a>"
+                                   + "<a class=\"btn btn-default\" href=\"Page3\">3</a>";
+
+            //Act
+            String result = myHelper.PageLinks(pagingInfo, pageUrlDelegate).ToString();
+
+            //Assert
+            Assert.AreEqual(expectedResult, result);
         }
     }
 }
