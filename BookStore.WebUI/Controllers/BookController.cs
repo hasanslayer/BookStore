@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using BookStore.Domain.Abstract;
 using BookStore.Domain.Entities;
+using BookStore.WebUI.Models;
 
 namespace BookStore.WebUI.Controllers
 {
@@ -20,11 +21,23 @@ namespace BookStore.WebUI.Controllers
 
         public ViewResult List(int pageNo = 1)
         {
-            return View(_repository.Books
-                .OrderBy(b => b.ISBN)
-                .Skip((pageNo - 1) * PageSize)
-                .Take(PageSize)
-            );
+            BookListViewModel model = new BookListViewModel
+            {
+                Books = _repository.Books
+                    .OrderBy(b => b.ISBN)
+                    .Skip((pageNo - 1) * PageSize)
+                    .Take(PageSize),
+
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = pageNo,
+                    ItemsPerPage = PageSize,
+                    TotalItems = _repository.Books.Count()
+                }
+            };
+
+
+            return View(model);
         }
 
         public ViewResult ListAll()
