@@ -33,7 +33,7 @@ namespace BookStore.UnitTests
             controller.PageSize = 3;
 
             //Act
-            BookListViewModel resultBooks = (BookListViewModel)controller.List(1).Model;
+            BookListViewModel resultBooks = (BookListViewModel)controller.List(null, 1).Model;
 
             //Assert
             Book[] bookArray = resultBooks.Books.ToArray();
@@ -84,7 +84,7 @@ namespace BookStore.UnitTests
             controller.PageSize = 3;
 
             //Act
-            BookListViewModel result = (BookListViewModel)controller.List(2).Model;
+            BookListViewModel result = (BookListViewModel)controller.List(null, 2).Model;
 
             //Assert
             PagingInfo pagingInfo = result.PagingInfo;
@@ -93,6 +93,30 @@ namespace BookStore.UnitTests
             Assert.AreEqual(pagingInfo.TotalItems, 5);
             Assert.AreEqual(pagingInfo.TotalPages, 2);
 
+        }
+
+        [TestMethod]
+        public void Can_Filter_Books()
+        {
+            //Arrange
+            Mock<IBookRepository> mock = new Mock<IBookRepository>();
+            mock.Setup(b => b.Books).Returns(
+                new Book[]
+                {
+                    new Book() { ISBN = 1,Title = "Operation System",Specialization = "CS"},
+                    new Book() { ISBN = 2,Title = "Web Application using ASP.NET",Specialization = "IS"},
+                    new Book() { ISBN = 3,Title = "Android Mobile Applications",Specialization = "IS"},
+                    new Book() { ISBN = 4,Title = "Database Systems",Specialization = "IS"},
+                    new Book() { ISBN = 5,Title = "MIS",Specialization = "IS"}
+                });
+            BookController controller = new BookController(mock.Object);
+            controller.PageSize = 3;
+
+            //Act
+            Book[] result = ((BookListViewModel)controller.List("IS", 2).Model).Books.ToArray();
+            //Assert
+            Assert.AreEqual(result.Length, 1);
+            Assert.IsTrue(result[0].Title == "MIS" && result[0].Specialization == "IS");
         }
     }
 }
