@@ -10,6 +10,8 @@ namespace BookStore.WebUI.Models
     {
         public IEnumerable<Book> Books { get; set; }
         public PagingInfo PagingInfo { get; set; }
+        public string CurrentSpecialization { get; set; }
+
 
 
     }

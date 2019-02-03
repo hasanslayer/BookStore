@@ -19,11 +19,12 @@ namespace BookStore.WebUI.Controllers
             _repository = bookRepository;
         }
 
-        public ViewResult List(int pageNo = 1)
+        public ViewResult List(string specialization, int pageNo = 1)
         {
             BookListViewModel model = new BookListViewModel
             {
                 Books = _repository.Books
+                    .Where(b => specialization == null || b.Specialization == specialization)
                     .OrderBy(b => b.ISBN)
                     .Skip((pageNo - 1) * PageSize)
                     .Take(PageSize),
@@ -33,7 +34,9 @@ namespace BookStore.WebUI.Controllers
                     CurrentPage = pageNo,
                     ItemsPerPage = PageSize,
                     TotalItems = _repository.Books.Count()
-                }
+                },
+
+                CurrentSpecialization = specialization
             };
 
 
