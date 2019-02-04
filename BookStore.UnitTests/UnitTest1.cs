@@ -118,5 +118,28 @@ namespace BookStore.UnitTests
             Assert.AreEqual(result.Length, 1);
             Assert.IsTrue(result[0].Title == "MIS" && result[0].Specialization == "IS");
         }
+
+        [TestMethod]
+        public void Can_Create_Specialization()
+        {
+            //Arrange
+            Mock<IBookRepository> mock = new Mock<IBookRepository>();
+            mock.Setup(b => b.Books).Returns(
+                new Book[]
+                {
+                    new Book() { ISBN = 1,Title = "Operation System",Specialization = "CS"},
+                    new Book() { ISBN = 2,Title = "Web Application using ASP.NET",Specialization = "IS"},
+                    new Book() { ISBN = 3,Title = "Android Mobile Applications",Specialization = "IS"},
+                    new Book() { ISBN = 4,Title = "Database Systems",Specialization = "IS"},
+                    new Book() { ISBN = 5,Title = "MIS",Specialization = "IS"}
+                });
+            NavController controller = new NavController(mock.Object);
+
+            //Act
+            string[] result = ((IEnumerable<string>)controller.Menu().Model).ToArray();
+            //Assert
+            Assert.AreEqual(result.Length, 2);
+            Assert.IsTrue(result[0] == "CS" && result[1] == "IS");
+        }
     }
 }
