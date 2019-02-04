@@ -9,10 +9,10 @@
 
 @foreach (var book in Model.Books)
 {
-    @Html.Partial("BookSummary",book)
+    @Html.Partial("BookSummary", book)
 
 }
 
 <div class="btn-group pull-right">
-    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { pageno = x }))
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", "Book", new { pageno = x, specialization = Model.CurrentSpecialization }))
 </div>

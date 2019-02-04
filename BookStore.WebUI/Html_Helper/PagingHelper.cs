@@ -24,7 +24,7 @@ namespace BookStore.WebUI.Html_Helper
                     tag.AddCssClass("btn-primary");
                 }
                 tag.AddCssClass("btn btn-default");
-                result.Append(tag);
+                result.Append(tag.ToString());
             }
             return MvcHtmlString.Create(result.ToString());
         }

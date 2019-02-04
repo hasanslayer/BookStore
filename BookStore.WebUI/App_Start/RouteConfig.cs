@@ -38,6 +38,17 @@ namespace BookStore.WebUI
 
             routes.MapRoute(
                 name: null,
+                url: "{specialization}",
+                defaults: new
+                {
+                    Controller = "Book",
+                    Action = "List",
+                    pageno = 1
+                }
+            );
+
+            routes.MapRoute(
+                name: null,
                 url: "{specialization}/Page{pageno}",
                 defaults: new
                 {
