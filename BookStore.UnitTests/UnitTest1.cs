@@ -141,5 +141,51 @@ namespace BookStore.UnitTests
             Assert.AreEqual(result.Length, 2);
             Assert.IsTrue(result[0] == "CS" && result[1] == "IS");
         }
+
+        [TestMethod]
+        public void Indicate_Selected_Spec()
+        {
+            //Arrange
+            Mock<IBookRepository> mock = new Mock<IBookRepository>();
+            mock.Setup(b => b.Books).Returns(
+                new Book[]
+                {
+                    new Book() { ISBN = 1,Title = "Operation System",Specialization = "CS"},
+                    new Book() { ISBN = 2,Title = "Web Application using ASP.NET",Specialization = "IS"},
+                    new Book() { ISBN = 3,Title = "Android Mobile Applications",Specialization = "IS"},
+                    new Book() { ISBN = 4,Title = "Database Systems",Specialization = "IS"},
+                    new Book() { ISBN = 5,Title = "MIS",Specialization = "IS"}
+                });
+            NavController controller = new NavController(mock.Object);
+
+            //Act
+            string result = controller.Menu("IS").ViewBag.SelectedSpec;
+            //Assert
+            Assert.AreEqual("IS", result);
+        }
+
+        [TestMethod]
+        public void Generate_Specialization_Specific_Book_Count()
+        {
+            //Arrange
+            Mock<IBookRepository> mock = new Mock<IBookRepository>();
+            mock.Setup(b => b.Books).Returns(
+                new Book[]
+                {
+                    new Book() { ISBN = 1,Title = "Operation System",Specialization = "CS"},
+                    new Book() { ISBN = 2,Title = "Web Application using ASP.NET",Specialization = "IS"},
+                    new Book() { ISBN = 3,Title = "Android Mobile Applications",Specialization = "IS"},
+                    new Book() { ISBN = 4,Title = "Database Systems",Specialization = "CS"},
+                    new Book() { ISBN = 5,Title = "MIS",Specialization = "IS"}
+                });
+            BookController controller = new BookController(mock.Object);
+
+            //Act
+            int result1 = ((BookListViewModel)controller.List("IS").Model).PagingInfo.TotalItems;
+            int result2 = ((BookListViewModel)controller.List("CS").Model).PagingInfo.TotalItems;
+            //Assert
+            Assert.AreEqual(result1, 3);
+            Assert.AreEqual(result2, 2);
+        }
     }
 }
