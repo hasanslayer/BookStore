@@ -194,6 +194,7 @@
     <Content Include="scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Book\List.cshtml" />
     <Content Include="Views\Shared\BookSummary.cshtml" />
+    <Content Include="Views\Nav\Menu.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -201,9 +202,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Nav\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\BookStore.Domain\BookStore.Domain.csproj">
       <Project>{fd359460-ee31-4a5d-9da8-cc9794a58599}</Project>

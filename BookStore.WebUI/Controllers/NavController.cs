@@ -15,8 +15,9 @@ namespace BookStore.WebUI.Controllers
         {
             _repository = repo;
         }
-        public PartialViewResult Menu()
+        public PartialViewResult Menu(string specialization = null)
         {
+            ViewBag.SelectedSpec = specialization;
             IEnumerable<string> spec = _repository.Books
                 .Select(b => b.Specialization)
                 .Distinct();
