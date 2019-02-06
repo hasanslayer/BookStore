@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using BookStore.Domain.Abstract;
 using BookStore.Domain.Entities;
+using BookStore.WebUI.Models;
 
 namespace BookStore.WebUI.Controllers
 {
@@ -26,7 +27,7 @@ namespace BookStore.WebUI.Controllers
                 GetCart().AddItem(book);
             }
 
-            return RedirectToAction("", new { returnUrl }); //Index
+            return RedirectToAction("Index", new { returnUrl }); //Index
         }
 
         public RedirectToRouteResult RemoveFromCart(int isbn, string returnUrl)
@@ -38,7 +39,7 @@ namespace BookStore.WebUI.Controllers
                 GetCart().RemoveItem(book);
             }
 
-            return RedirectToAction("", new { returnUrl }); //Index
+            return RedirectToAction("Index", new { returnUrl }); //Index
         }
 
         private Cart GetCart()
@@ -51,6 +52,15 @@ namespace BookStore.WebUI.Controllers
                 Session["Cart"] = cart;
             }
             return cart;
+        }
+
+        public ActionResult Index(string returnUrl)
+        {
+            return View(new CartIndexViewModel
+            {
+                Cart = GetCart(),
+                ReturnUrl = returnUrl
+            });
         }
     }
 }
