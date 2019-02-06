@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Domain.Entities
 {
-    class Cart
+    public class Cart
     {
         private List<CartLine> lineCollection = new List<CartLine>();
 
