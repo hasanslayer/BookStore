@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.ModelBinding;
+using System.Web.Mvc;
 using BookStore.Domain.Entities;
 
 namespace BookStore.WebUI.Infrastructure.Binders
@@ -10,7 +10,7 @@ namespace BookStore.WebUI.Infrastructure.Binders
     public class CartModelBinder : IModelBinder
     {
         private const string SessionKey = "Cart";
-        public object BindModel(ModelBindingExecutionContext controllerContext, ModelBindingContext bindingContext)
+        public Object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
             // get cart from session
             Cart cart = null;
@@ -29,11 +29,6 @@ namespace BookStore.WebUI.Infrastructure.Binders
             }
             return cart;
 
-        }
-
-        bool IModelBinder.BindModel(ModelBindingExecutionContext modelBindingExecutionContext, ModelBindingContext bindingContext)
-        {
-            throw new NotImplementedException();
         }
     }
 }

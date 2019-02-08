@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using BookStore.Domain.Entities;
+using BookStore.WebUI.Infrastructure.Binders;
 
 namespace BookStore.WebUI
 {
@@ -13,6 +15,7 @@ namespace BookStore.WebUI
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            ModelBinders.Binders.Add(typeof(Cart), new CartModelBinder());
         }
     }
 }
