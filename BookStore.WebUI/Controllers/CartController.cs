@@ -18,49 +18,37 @@ namespace BookStore.WebUI.Controllers
             _repository = repo;
         }
 
-        public RedirectToRouteResult AddToChart(int isbn, string returnUrl)
-        {
-            Book book = _repository.Books.FirstOrDefault(b => b.ISBN == isbn);
-
-            if (book != null)
-            {
-                GetCart().AddItem(book);
-            }
-
-            return RedirectToAction("Index", new { returnUrl }); //Index
-        }
-
-        public RedirectToRouteResult RemoveFromCart(int isbn, string returnUrl)
-        {
-            Book book = _repository.Books.FirstOrDefault(b => b.ISBN == isbn);
-
-            if (book != null)
-            {
-                GetCart().RemoveItem(book);
-            }
-
-            return RedirectToAction("Index", new { returnUrl }); //Index
-        }
-
-        private Cart GetCart()
-        {
-            Cart cart = (Cart)Session["Cart"];
-
-            if (cart == null)
-            {
-                cart = new Cart();
-                Session["Cart"] = cart;
-            }
-            return cart;
-        }
-
-        public ActionResult Index(string returnUrl)
+        public ActionResult Index(Cart cart, string returnUrl)
         {
             return View(new CartIndexViewModel
             {
-                Cart = GetCart(),
+                Cart = cart,
                 ReturnUrl = returnUrl
             });
+        }
+
+        public RedirectToRouteResult AddToChart(Cart cart, int isbn, string returnUrl)
+        {
+            Book book = _repository.Books.FirstOrDefault(b => b.ISBN == isbn);
+
+            if (book != null)
+            {
+                cart.AddItem(book);
+            }
+
+            return RedirectToAction("Index", new { returnUrl }); //Index
+        }
+
+        public RedirectToRouteResult RemoveFromCart(Cart cart, int isbn, string returnUrl)
+        {
+            Book book = _repository.Books.FirstOrDefault(b => b.ISBN == isbn);
+
+            if (book != null)
+            {
+                cart.RemoveItem(book);
+            }
+
+            return RedirectToAction("Index", new { returnUrl }); //Index
         }
     }
 }
