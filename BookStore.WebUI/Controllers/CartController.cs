@@ -50,5 +50,10 @@ namespace BookStore.WebUI.Controllers
 
             return RedirectToAction("Index", new { returnUrl }); //Index
         }
+
+        public PartialViewResult Summary(Cart cart)
+        {
+            return PartialView(cart);
+        }
     }
 }

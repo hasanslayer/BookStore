@@ -4,35 +4,50 @@
     ViewBag.Title = "BookStore: Your Cart";
 }
 
+<style>
+    #cartTable td {
+        vertical-align: middle;
+    }
+</style>
+
 <h2>Your Cart</h2>
 
-<table class="table">
+<table id="cartTable" class="table">
     <thead>
-    <tr>
-        <th class="text-left">Item</th>
-        <th class="text-left">Quantity</th>
-        <th class="text-right">Price</th>
-        <th class="text-right">Subtotal</th>
-    </tr>
+        <tr>
+            <th class="text-left">Item</th>
+            <th class="text-left">Quantity</th>
+            <th class="text-right">Price</th>
+            <th class="text-right">Subtotal</th>
+        </tr>
     </thead>
     <tbody>
-    @foreach (var line in Model.Cart.CartLines)
-    {
-        <tr>
-            <td class="text-left">@line.Book.Title</td>
-            <td class="text-left">@line.Quantity</td>
-            <td class="text-right">@line.Book.Price.ToString("C")</td>
-            <td class="text-right">@((line.Quantity * line.Book.Price).ToString("C"))</td>
-        </tr>
-    }
+        @foreach (var line in Model.Cart.CartLines)
+        {
+            <tr>
+                <td class="text-left">@line.Book.Title</td>
+                <td class="text-left">@line.Quantity</td>
+                <td class="text-right">@line.Book.Price.ToString("C")</td>
+                <td class="text-right">@((line.Quantity * line.Book.Price).ToString("C"))</td>
+
+                <td>
+                    @using (Html.BeginForm("RemoveFromCart", "Cart"))
+                    {
+                        @Html.Hidden("isbn", line.Book.ISBN)
+                        @Html.HiddenFor(url => url.ReturnUrl)
+                        <input class="btn btn-warning btn-sm" type="submit" value="Remove" />
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
     <tfoot>
-    <tr>
-        <td colspan="3" class="text-right">Total:</td>
-        <td class="text-right">
-            @Model.Cart.ComputerTotalValue().ToString("C")
-        </td>
-    </tr>
+        <tr>
+            <td colspan="3" class="text-right">Total:</td>
+            <td class="text-right">
+                @Model.Cart.ComputerTotalValue().ToString("C")
+            </td>
+        </tr>
     </tfoot>
 </table>
 
