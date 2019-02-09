@@ -18,7 +18,7 @@ namespace BookStore.WebUI.Controllers
             _repository = repo;
         }
 
-        public ActionResult Index(Cart cart, string returnUrl)
+        public ViewResult Index(Cart cart, string returnUrl)
         {
             return View(new CartIndexViewModel
             {
