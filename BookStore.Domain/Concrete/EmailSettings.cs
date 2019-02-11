@@ -35,16 +35,16 @@ namespace BookStore.Domain.Concrete
         {
             using (var smtpClient = new SmtpClient())
             {
-                smtpClient.EnableSsl = _emailSettings.UseSsl;
-                smtpClient.Host = _emailSettings.ServerName;
-                smtpClient.Port = _emailSettings.ServerPort;
+                smtpClient.EnableSsl = emailSettings.UseSsl;
+                smtpClient.Host = emailSettings.ServerName;
+                smtpClient.Port = emailSettings.ServerPort;
                 smtpClient.UseDefaultCredentials = false;
-                smtpClient.Credentials = new NetworkCredential(_emailSettings.Username, _emailSettings.Password);
+                smtpClient.Credentials = new NetworkCredential(emailSettings.Username, emailSettings.Password);
 
-                if (_emailSettings.WriteAsFile)
+                if (emailSettings.WriteAsFile)
                 {
                     smtpClient.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
-                    smtpClient.PickupDirectoryLocation = _emailSettings.FileLocation;
+                    smtpClient.PickupDirectoryLocation = emailSettings.FileLocation;
                     smtpClient.EnableSsl = false;
                 }
 
@@ -72,13 +72,13 @@ namespace BookStore.Domain.Concrete
                     .AppendFormat("Gift Wrap :{0} ", shippingDetails.GiftWrap ? "Yes" : "No");
 
                 MailMessage mailMessage = new MailMessage(
-                    _emailSettings.MailFromAddress,
-                    _emailSettings.MailToAddress,
+                    emailSettings.MailFromAddress,
+                    emailSettings.MailToAddress,
                     "New order submitted",
                     msgBody.ToString()
                 );
 
-                if (_emailSettings.WriteAsFile)
+                if (emailSettings.WriteAsFile)
                 {
                     mailMessage.BodyEncoding = Encoding.ASCII;
                 }
