@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -42,7 +43,13 @@ namespace BookStore.WebUI.Infrastructure
             //        new Book {Title = "Web Client", Price = 87}
             //    }
             //);
+            EmailSettings emailSettings = new EmailSettings()
+            {
+                WriteAsFile = bool.Parse(ConfigurationManager.AppSettings["Email.WriteAsFile"] ?? "false")
+            };
             kernel.Bind<IBookRepository>().To<EFBookRepository>();
+            kernel.Bind<IOrderProcessor>().To<EmailOrderProcessor>()
+                .WithConstructorArgument("settings", emailSettings);// "settings" that passed in the constructor 
         }
     }
 }
