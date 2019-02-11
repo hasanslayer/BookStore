@@ -136,7 +136,7 @@ namespace BookStore.UnitTests
                 }.AsQueryable()
                 );
             Cart cart = new Cart();
-            CartController target = new CartController(mock.Object);
+            CartController target = new CartController(mock.Object,null);
 
             //Act
             target.AddToChart(cart, 1, null);
@@ -158,7 +158,7 @@ namespace BookStore.UnitTests
                 }.AsQueryable()
             );
             Cart cart = new Cart();
-            CartController target = new CartController(mock.Object);
+            CartController target = new CartController(mock.Object,null);
 
             //Act
             RedirectToRouteResult result = target.AddToChart(cart, 2, "myUrl");
@@ -174,7 +174,7 @@ namespace BookStore.UnitTests
         {
             //Arrange
             Cart cart = new Cart();
-            CartController target = new CartController(null);
+            CartController target = new CartController(null,null);
 
             //Act
             CartIndexViewModel result = (CartIndexViewModel)target.Index(cart, "myUrl").ViewData.Model;

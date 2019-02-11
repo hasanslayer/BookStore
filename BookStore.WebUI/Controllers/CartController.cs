@@ -12,10 +12,12 @@ namespace BookStore.WebUI.Controllers
     public class CartController : Controller
     {
         private IBookRepository _repository;
+        private IOrderProcessor _orderProcessor;
 
-        public CartController(IBookRepository repo)
+        public CartController(IBookRepository repo, IOrderProcessor orderProcessor)
         {
             _repository = repo;
+            _orderProcessor = orderProcessor;
         }
 
         public ViewResult Index(Cart cart, string returnUrl)
@@ -59,6 +61,25 @@ namespace BookStore.WebUI.Controllers
         public ViewResult Checkout()
         {
             return View(new ShippingDetails());
+        }
+
+        [HttpPost]
+        public ViewResult Checkout(Cart cart, ShippingDetails shippingDetails)
+        {
+            if (!cart.CartLines.Any())
+            {
+                ModelState.AddModelError("", "Sorry, your cart is empty");
+            }
+            if (ModelState.IsValid)
+            {
+                _orderProcessor.ProcessOrder(cart, shippingDetails);
+                cart.Clear();
+                return View("Completed");
+            }
+            else
+            {
+                return View(shippingDetails);
+            }
         }
     }
 }
