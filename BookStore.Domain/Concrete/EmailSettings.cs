@@ -83,7 +83,15 @@ namespace BookStore.Domain.Concrete
                     mailMessage.BodyEncoding = Encoding.ASCII;
                 }
 
-                smtpClient.Send(mailMessage);
+                try
+                {
+                    smtpClient.Send(mailMessage);
+                }
+                catch
+                {
+                    ;
+                }
+               
 
 
             }
