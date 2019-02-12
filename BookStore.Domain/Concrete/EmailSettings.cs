@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -12,11 +13,11 @@ namespace BookStore.Domain.Concrete
 {
     public class EmailSettings
     {
-        public string MailToAddress = "oreders@xbookstore.com, admin@xbookstore.com";
-        public string MailFromAddress = "infoxbookstore@gmail.com";
+        public string MailToAddress = "reciver1@example.com, reciever2@example.com";
+        public string MailFromAddress = "sender@example.com";
         public bool UseSsl = true;
-        public string Username = "infobookstore@gmail.com";
-        public string Password = "MyPassword";
+        public string Username = "sender@example.com";
+        public string Password = "password";
         public string ServerName = "smtp.gmail.com";
         public int ServerPort = 587;
         public bool WriteAsFile = false;
@@ -87,9 +88,9 @@ namespace BookStore.Domain.Concrete
                 {
                     smtpClient.Send(mailMessage);
                 }
-                catch
+                catch(Exception e)
                 {
-                    ;
+                    Debug.Print(e.Message);
                 }
                
 
