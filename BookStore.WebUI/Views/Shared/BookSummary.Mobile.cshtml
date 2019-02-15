@@ -1,0 +1,31 @@
+﻿@model BookStore.Domain.Entities.Book
+
+<div data-role="collapsible" data-collapsed="false" data-content-theme="c">
+    <h2>
+        <strong>@Model.Title</strong>
+    </h2>
+    <div class="ui-grid-b">
+        <div class="ui-block-a">
+            @Model.Description
+        </div>
+        <div class="ui-block-b">
+            <strong>@Model.Price.ToString("C")</strong>
+        </div>
+        <div class="ui-block-c">
+            @using (Html.BeginForm("AddToChart", "Cart"))
+            {
+                <div class="pull-right">
+                    @Html.HiddenFor(b => b.ISBN)
+                    @Html.Hidden("returnUrl", Request.Url?.PathAndQuery)
+                    <input type="submit" data-inline="true" data-mini="true" value="Add to chart" />
+
+                </div>
+            }
+        </div>
+
+    </div>
+
+
+
+</div>
+

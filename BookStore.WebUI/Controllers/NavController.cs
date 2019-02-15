@@ -22,7 +22,9 @@ namespace BookStore.WebUI.Controllers
                 .Select(b => b.Specialization)
                 .Distinct();
 
-            return PartialView(spec);
+            // string viewName = mobileLayout ? "MenuHorizontal" : "Menu";
+
+            return PartialView("FlexMenu",spec);
         }
     }
 }
