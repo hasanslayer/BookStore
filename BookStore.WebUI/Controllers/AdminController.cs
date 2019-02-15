@@ -7,6 +7,7 @@ using BookStore.Domain.Abstract;
 
 namespace BookStore.WebUI.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private IBookRepository _repository;

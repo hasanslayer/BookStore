@@ -9,6 +9,8 @@ using Ninject;
 using BookStore.Domain.Abstract;
 using BookStore.Domain.Concrete;
 using BookStore.Domain.Entities;
+using BookStore.WebUI.Infrastructure.Abstract;
+using BookStore.WebUI.Infrastructure.Concrete;
 
 namespace BookStore.WebUI.Infrastructure
 {
@@ -48,6 +50,7 @@ namespace BookStore.WebUI.Infrastructure
                 WriteAsFile = bool.Parse(ConfigurationManager.AppSettings["Email.WriteAsFile"] ?? "false")
             };
             kernel.Bind<IBookRepository>().To<EFBookRepository>();
+            kernel.Bind<IAuthProvider>().To<FormsAuthProvider>();
             kernel.Bind<IOrderProcessor>().To<EmailOrderProcessor>()
                 .WithConstructorArgument("settings", emailSettings);// "settings" that passed in the constructor 
         }
