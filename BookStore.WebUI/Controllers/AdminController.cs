@@ -17,7 +17,7 @@ namespace BookStore.WebUI.Controllers
             _repository = repository;
         }
         // GET: Admin
-        public ActionResult Index()
+        public ViewResult Index()
         {
             return View(_repository.Books);
         }
