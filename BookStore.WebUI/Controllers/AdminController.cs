@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BookStore.Domain.Abstract;
+using BookStore.Domain.Entities;
 
 namespace BookStore.WebUI.Controllers
 {
@@ -20,6 +21,12 @@ namespace BookStore.WebUI.Controllers
         public ViewResult Index()
         {
             return View(_repository.Books);
+        }
+
+        public ViewResult Edit(int isbn)
+        {
+            Book book = _repository.Books.FirstOrDefault(b => b.ISBN == isbn);
+            return View(book);
         }
     }
 }
