@@ -28,5 +28,21 @@ namespace BookStore.WebUI.Controllers
             Book book = _repository.Books.FirstOrDefault(b => b.ISBN == isbn);
             return View(book);
         }
+
+        [HttpPost]
+        public ActionResult Edit(Book book)
+        {
+            if (ModelState.IsValid)
+            {
+                _repository.SaveBook(book);
+                TempData["message"] = book.Title + " has been saved"; // TempData finish when http reqeust finishing
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                // if not valid ,do something
+                return View(book);
+            }
+        }
     }
 }

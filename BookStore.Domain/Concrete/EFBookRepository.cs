@@ -18,5 +18,26 @@ namespace BookStore.Domain.Concrete
                 return context.Books;
             }
         }
+
+        public void SaveBook(Book book)
+        {
+
+
+            Book dbEntity = context.Books.Find(book.ISBN);
+            if (dbEntity == null)
+            {
+                context.Books.Add(book);
+            }
+            else
+            {
+                dbEntity.Title = book.Title;
+                dbEntity.Description = book.Description;
+                dbEntity.Price = book.Price;
+                dbEntity.Specialization = book.Specialization;
+            }
+
+            context.SaveChanges();
+
+        }
     }
 }
