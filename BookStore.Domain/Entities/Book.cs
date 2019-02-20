@@ -13,10 +13,15 @@ namespace BookStore.Domain.Entities
         [Key]
         [HiddenInput(DisplayValue = false)]
         public int ISBN { get; set; }
+        [Required(ErrorMessage = "Book title is required.")]
         public string Title { get; set; }
         [DataType(DataType.MultilineText)]
+        [Required(ErrorMessage = "Book description is required.")]
         public string Description { get; set; }
+        [Required(ErrorMessage = "Book price is required.")]
+        [Range(0.1, 9999.99, ErrorMessage = "Please enter the valid price")]
         public decimal Price { get; set; }
+        [Required]
         public string Specialization { get; set; }
 
     }
