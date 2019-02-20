@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Mvc;
 using BookStore.Domain.Abstract;
 using BookStore.Domain.Entities;
 using BookStore.WebUI.Controllers;
@@ -81,6 +82,39 @@ namespace BookStore.UnitTests
 
             //Assert
             Assert.IsNull(book4);
+        }
+
+        [TestMethod]
+        public void Can_Save_Valid_Changes()
+        {
+            //Arrange
+            Mock<IBookRepository> mock = new Mock<IBookRepository>();
+            AdminController target = new AdminController(mock.Object);
+            Book book = new Book() { Title = "Test Book" };
+
+            //Act
+            ActionResult result = target.Edit(book);
+
+            //Assert
+            mock.Verify(b => b.SaveBook(book));
+            Assert.IsNotInstanceOfType(result, typeof(ViewResult));
+        }
+
+        [TestMethod]
+        public void Can_Save_Invalid_Changes()
+        {
+            //Arrange
+            Mock<IBookRepository> mock = new Mock<IBookRepository>();
+            AdminController target = new AdminController(mock.Object);
+            Book book = new Book { Title = "Test Book" };
+            target.ModelState.AddModelError("error", "error");
+
+            //Act
+            ActionResult result = target.Edit(book);
+
+            //Assert
+            mock.Verify(b => b.SaveBook(It.IsAny<Book>()), Times.Never());
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
     }
 }

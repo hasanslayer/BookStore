@@ -9,8 +9,14 @@
     <link href="~/Content/ErrorStyle.css" rel="stylesheet" />
 </head>
 <body>
-    <div>
-        @RenderBody()
-    </div>
+<div>
+    @if (TempData["message"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["message"]
+        </div>
+    }
+    @RenderBody()
+</div>
 </body>
 </html>
