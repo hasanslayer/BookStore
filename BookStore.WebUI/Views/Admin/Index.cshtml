@@ -7,7 +7,7 @@
 
 <h2>Admin Index</h2>
 
-
+@{ int row = 0; }
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3>All Books</h3>
@@ -28,14 +28,15 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Specialization)
                 </th>
-                <th></th>
-            </tr>
+                <th>
 
+                </th>
+            </tr>
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ISBN)
+                    <td class="text-center">
+                        @(row += 1)
                     </td>
                     <td>
                         @Html.ActionLink(item.Title, "Edit", new { item.ISBN })
@@ -47,7 +48,7 @@
                         @Html.DisplayFor(modelItem => item.Specialization)
                     </td>
                     <td class="text-center">
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ISBN }, new { @class = "btn btn-danger btn-sm" })
+                        @Html.ActionLink("Delete", "Delete", new { item.ISBN }, new { @class = "btn btn-danger btn-sm" })
                     </td>
                 </tr>
             }
@@ -55,7 +56,7 @@
         </table>
     </div>
     <div class="panel-footer">
-       by Hasan Darwish&hearts;
+        by Hasan Darwish&hearts;
     </div>
 
 </div>

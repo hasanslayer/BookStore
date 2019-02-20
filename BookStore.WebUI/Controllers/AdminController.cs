@@ -44,5 +44,21 @@ namespace BookStore.WebUI.Controllers
                 return View(book);
             }
         }
+
+        public ViewResult Create()
+        {
+            return View("Edit", new Book());
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int isbn)
+        {
+            Book deletedBook = _repository.DeleteBook(isbn);
+            if (deletedBook != null)
+            {
+                TempData["message"] = deletedBook.Title + " was deleted";
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

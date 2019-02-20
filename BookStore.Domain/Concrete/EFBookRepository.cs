@@ -39,5 +39,17 @@ namespace BookStore.Domain.Concrete
             context.SaveChanges();
 
         }
+
+        public Book DeleteBook(int isbn)
+        {
+            Book dbEntity = context.Books.Find(isbn);
+            if (dbEntity != null)
+            {
+                context.Books.Remove(dbEntity);
+                context.SaveChanges();
+            }
+
+            return dbEntity;
+        }
     }
 }
